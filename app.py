@@ -37,10 +37,11 @@ import smtplib
 from email.mime.text import MIMEText
 
 # ---------------- OTP EMAIL (FIXED) ----------------
+# ---------------- OTP EMAIL (FIXED FOR RENDER) ----------------
 def send_otp_email(email, otp):
     sender = "narotamdharaviya65@gmail.com"
-    # સ્પેશ (Spaces) દૂર કરીને પાસવર્ડ લખ્યો છે
-    password = "voeb nvlt zfjh ucmn" 
+    # Spaces દૂર કરીને પાસવર્ડ સેટ કર્યો
+    password = "voebnvltzfhjucmn" 
 
     msg = MIMEText(f"Your OTP for verification is: {otp}")
     msg["Subject"] = "OTP Verification - Job Portal"
@@ -48,8 +49,8 @@ def send_otp_email(email, otp):
     msg["To"] = email
 
     try:
-        # Port 465 (TLS) વાપરવાથી બ્લોકિંગ અને ટાઈમઆઉટની તકલીફ નહી રહે
-        server = smtplib.SMTP("smtp.gmail.com", 465, timeout=10)
+        # Timeout અને SSL/TLS સેટઅપ
+        server = smtplib.SMTP("smtp.gmail.com", 587, timeout=15)
         server.starttls()
         server.login(sender, password)
         server.sendmail(sender, email, msg.as_string())
@@ -59,8 +60,6 @@ def send_otp_email(email, otp):
     except Exception as e:
         print("SMTP Error details:", str(e))
         return False
-
-
 
 # =====================================================
 # ================= USER SECTION ======================
