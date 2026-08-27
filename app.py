@@ -1683,3 +1683,4 @@ def terms_conditions():
 # ---------------- RUN ----------------
 if __name__ == "__main__":
     app.run(debug=True)
+expose_app = app
