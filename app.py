@@ -419,29 +419,25 @@ def login():
     return render_template("login.html")
 
 # ---------------- PASSWORD RESET ----------------
+
+
 @app.route("/forgot-password", methods=["POST"])
 def forgot_password():
     email = request.form.get("email")
-    
     cur = db.cursor(dictionary=True)
     cur.execute("SELECT * FROM users WHERE email=%s", (email,))
     user = cur.fetchone()
-    cur.close()
 
     if user:
-        # Cryptographically secure 6-digit OTP
-        otp = str(secrets.randbelow(900000) + 100000)
-        
+        otp = random.randint(100000, 999999)
         session["reset_email"] = email
-        session["reset_otp"] = otp
-        # Set 10-minute expiry time
-        session["otp_expiry"] = (datetime.now() + timedelta(minutes=10)).timestamp()
+        session["reset_otp"] = str(otp)
         
+        # Reuse your existing email function
         send_otp_email(email, otp)
-
-    # Generic message prevents user enumeration attacks
-    return {"status": "success", "message": "If this email is registered, an OTP has been sent."}
-
+        return {"status": "success", "message": "OTP sent to your email"}
+    
+    return {"status": "error", "message": "Email not found!"}
 
 @app.route("/reset-password", methods=["POST"])
 def reset_password():
@@ -449,31 +445,21 @@ def reset_password():
     new_password = request.form.get("password")
     confirm_password = request.form.get("confirm_password")
     
+    # Session data check
     stored_otp = session.get("reset_otp")
     reset_email = session.get("reset_email")
-    otp_expiry = session.get("otp_expiry")
 
-    # 1. Validation & Expiry check
-    if not stored_otp or not reset_email or not otp_expiry:
-        return {"status": "error", "message": "Invalid session. Please request a new OTP."}
-        
-    if datetime.now().timestamp() > otp_expiry:
-        # Clear expired session data
-        session.pop("reset_otp", None)
-        session.pop("reset_email", None)
-        session.pop("otp_expiry", None)
-        return {"status": "error", "message": "OTP has expired!"}
-
-    if otp_input != stored_otp:
-        return {"status": "error", "message": "Invalid OTP!"}
+    if not stored_otp or otp_input != stored_otp:
+        return {"status": "error", "message": "Invalid or expired OTP!"}
     
+    # Server-side validation
     if len(new_password) < 6:
-        return {"status": "error", "message": "Password must be at least 6 characters long!"}
+        return {"status": "error", "message": "Password too short!"}
         
     if new_password != confirm_password:
         return {"status": "error", "message": "Passwords do not match!"}
 
-    # 2. Generate Password Hash
+    # Generate hash for the new password
     hashed_password = generate_password_hash(new_password)
 
     try:
@@ -482,11 +468,9 @@ def reset_password():
         db.commit()
         cur.close()
         
-        # Cleanup session
+        # Cleanup
         session.pop("reset_otp", None)
         session.pop("reset_email", None)
-        session.pop("otp_expiry", None)
-        
         return {"status": "success", "message": "Password reset successful! You can now login."}
     except Exception as e:
         print(f"Error: {e}")
