@@ -15,10 +15,12 @@ app.secret_key = "secret123"
 
 # ---------------- DATABASE ----------------
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="job_portal"
+    host=os.getenv('DB_HOST'),
+    user=os.getenv('DB_USER'),
+    password=os.getenv('DB_PASSWORD'),
+    port=int(os.getenv('DB_PORT', 4000)),
+    database=os.getenv('DB_NAME', 'test'),
+    ssl_ca="/etc/ssl/certs/ca-certificates.crt"  # TiDB SSL કનેક્શન માટે
 )
 cursor = db.cursor(dictionary=True)
 
