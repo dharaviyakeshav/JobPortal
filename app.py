@@ -1573,18 +1573,23 @@ def admin_delete_user(id):
         cur.close()
 
     return redirect("/admin/user")
-#-------------contact-----------------
+    #--------------contact page------------------
+import os
+import smtplib
+from email.mime.text import MIMEText
+from flask import Flask, render_template, request
+
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
-        name = request.form["name"]
-        email = request.form["email"]
-        subject = request.form["subject"]
-        message = request.form["message"]
+        first_name = request.form.get("first_name", "").strip()
+        last_name = request.form.get("last_name", "").strip()
+        name = f"{first_name} {last_name}".strip()
+        email = request.form.get("email", "").strip()
+        subject = request.form.get("subject", "").strip()
+        message = request.form.get("message", "").strip()
 
-        # ===============================
         # 1️⃣ SAVE TO DATABASE
-        # ===============================
         cur = db.cursor()
         cur.execute(
             "INSERT INTO feedback (name, email, subject, message) VALUES (%s,%s,%s,%s)",
@@ -1593,22 +1598,17 @@ def contact():
         db.commit()
         cur.close()
 
-        # ===============================
-        # 2️⃣ EMAIL CONFIG
-        # ===============================
-        SENDER_EMAIL = "narotamdharaviya65@gmail.com"
-        APP_PASSWORD = "wckt cxmm xvdu vulf"
-        ADMIN_EMAIL = "narotamdharaviya65@gmail.com"
+        # 2️⃣ EMAIL CONFIG (Use environment variables for credentials)
+        SENDER_EMAIL = os.getenv("SENDER_EMAIL", "narotamdharaviya65@gmail.com")
+        APP_PASSWORD = os.getenv("APP_PASSWORD", "wckt cxmm xvdu vulf") 
+        ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "narotamdharaviya65@gmail.com")
 
         try:
             with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
                 server.login(SENDER_EMAIL, APP_PASSWORD)
 
-                # ===============================
                 # 3️⃣ EMAIL TO ADMIN
-                # ===============================
-                admin_body = f"""
-New Contact Request 📩
+                admin_body = f"""New Contact Request 📩
 
 Name   : {name}
 Email  : {email}
@@ -1619,7 +1619,7 @@ Message:
 """
                 admin_msg = MIMEText(admin_body)
                 admin_msg["Subject"] = f"New Contact: {subject}"
-                admin_msg["From"] = "Job Portal <narotamdharaviya65@gmail.com>"
+                admin_msg["From"] = f"Job Portal <{SENDER_EMAIL}>"
                 admin_msg["To"] = ADMIN_EMAIL
                 admin_msg["Reply-To"] = email
 
@@ -1629,30 +1629,24 @@ Message:
                     admin_msg.as_string()
                 )
 
-                # ===============================
-                # 4️⃣ AUTO-REPLY TO USER ✅
-                # ===============================
-                user_body = f"""
-Hi {name},
+                # 4️⃣ AUTO-REPLY TO USER
+                user_body = f"""Hi {name},
 
 Thank you for contacting Job Portal! 👋
 
 We have received your message regarding:
 "{subject}"
 
-Our support team is reviewing your request and
-will get back to you as soon as possible.
+Our support team is reviewing your request and will get back to you as soon as possible.
 
 ⏳ Expected response time: 24 hours
-
-If you need urgent help, feel free to reply to this email.
 
 Best regards,
 Job Portal Support Team
 """
                 user_msg = MIMEText(user_body)
                 user_msg["Subject"] = "We received your request – Job Portal"
-                user_msg["From"] = "Job Portal <narotamdharaviya65@gmail.com>"
+                user_msg["From"] = f"Job Portal <{SENDER_EMAIL}>"
                 user_msg["To"] = email
 
                 server.sendmail(
