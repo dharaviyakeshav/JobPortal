@@ -48,8 +48,8 @@ def send_otp_email(email, otp):
     msg["To"] = email
 
     try:
-        # Port 587 (TLS) વાપરવાથી બ્લોકિંગ અને ટાઈમઆઉટની તકલીફ નહી રહે
-        server = smtplib.SMTP("smtp.gmail.com", 587, timeout=10)
+        # Port 465 (TLS) વાપરવાથી બ્લોકિંગ અને ટાઈમઆઉટની તકલીફ નહી રહે
+        server = smtplib.SMTP("smtp.gmail.com", 465, timeout=10)
         server.starttls()
         server.login(sender, password)
         server.sendmail(sender, email, msg.as_string())
@@ -1159,7 +1159,7 @@ Don't worry — keep applying and stay positive 💪
     msg["From"] = "Job Portal <narotamdharaviya65@gmail.com>"
     msg["To"] = to_email
 
-    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server = smtplib.SMTP("smtp.gmail.com", 465)
     server.starttls()
     server.login("narotamdharaviya65@gmail.com", "wckt cxmm xvdu vulf")
     server.send_message(msg)
@@ -1609,11 +1609,11 @@ def contact():
         ADMIN_EMAIL = "narotamdharaviya65@gmail.com"
 
         # ===============================
-        # 3️⃣ SEND EMAIL (SMTP via TLS 587)
+        # 3️⃣ SEND EMAIL (SMTP via TLS 465)
         # ===============================
         try:
-            # Gmail Server connection (Port 587 TLS is more reliable)
-            server = smtplib.SMTP("smtp.gmail.com", 587)
+            # Gmail Server connection (Port 465 TLS is more reliable)
+            server = smtplib.SMTP("smtp.gmail.com", 465)
             server.starttls()
             server.login(SENDER_EMAIL, APP_PASSWORD)
 
