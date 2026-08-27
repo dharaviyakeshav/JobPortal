@@ -19,7 +19,7 @@ db = mysql.connector.connect(
     user=os.getenv('DB_USER'),
     password=os.getenv('DB_PASSWORD'),
     port=int(os.getenv('DB_PORT', 4000)),
-    database=os.getenv('DB_NAME', 'test'),
+    database=os.getenv('DB_NAME', 'jobportal'),
     ssl_ca="/etc/ssl/certs/ca-certificates.crt"  # TiDB SSL કનેક્શન માટે
 )
 cursor = db.cursor(dictionary=True)
@@ -37,11 +37,10 @@ import smtplib
 from email.mime.text import MIMEText
 
 # ---------------- OTP EMAIL (FIXED) ----------------
-# ---------------- OTP EMAIL (FIXED FOR RENDER) ----------------
 def send_otp_email(email, otp):
     sender = "narotamdharaviya65@gmail.com"
-    # Spaces દૂર કરીને પાસવર્ડ સેટ કર્યો
-    password = "voebnvltzfhjucmn" 
+    # સ્પેશ (Spaces) દૂર કરીને પાસવર્ડ લખ્યો છે
+    password = "voeb nvlt zfjh ucmn" 
 
     msg = MIMEText(f"Your OTP for verification is: {otp}")
     msg["Subject"] = "OTP Verification - Job Portal"
@@ -49,8 +48,8 @@ def send_otp_email(email, otp):
     msg["To"] = email
 
     try:
-        # Timeout અને SSL/TLS સેટઅપ
-        server = smtplib.SMTP("smtp.gmail.com", 587, timeout=15)
+        # Port 587 (TLS) વાપરવાથી બ્લોકિંગ અને ટાઈમઆઉટની તકલીફ નહી રહે
+        server = smtplib.SMTP("smtp.gmail.com", 587, timeout=10)
         server.starttls()
         server.login(sender, password)
         server.sendmail(sender, email, msg.as_string())
@@ -60,6 +59,8 @@ def send_otp_email(email, otp):
     except Exception as e:
         print("SMTP Error details:", str(e))
         return False
+
+
 
 # =====================================================
 # ================= USER SECTION ======================
@@ -1158,7 +1159,7 @@ Don't worry — keep applying and stay positive 💪
     msg["From"] = "Job Portal <narotamdharaviya65@gmail.com>"
     msg["To"] = to_email
 
-    server = smtplib.SMTP("smtp.gmail.com", 465)
+    server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
     server.login("narotamdharaviya65@gmail.com", "wckt cxmm xvdu vulf")
     server.send_message(msg)
@@ -1289,7 +1290,7 @@ def admin_dashboard():
         total_users=total_users,
         total_applications=total_applications
     )
-@app.route("/admin/users")
+@app.route("/admin/user")
 def admin_users():
     if not admin_required():
         return redirect("/admin/login")
@@ -1608,11 +1609,11 @@ def contact():
         ADMIN_EMAIL = "narotamdharaviya65@gmail.com"
 
         # ===============================
-        # 3️⃣ SEND EMAIL (SMTP via TLS 465)
+        # 3️⃣ SEND EMAIL (SMTP via TLS 587)
         # ===============================
         try:
-            # Gmail Server connection (Port 465 TLS is more reliable)
-            server = smtplib.SMTP("smtp.gmail.com", 465)
+            # Gmail Server connection (Port 587 TLS is more reliable)
+            server = smtplib.SMTP("smtp.gmail.com", 587)
             server.starttls()
             server.login(SENDER_EMAIL, APP_PASSWORD)
 
@@ -1683,4 +1684,3 @@ def terms_conditions():
 # ---------------- RUN ----------------
 if __name__ == "__main__":
     app.run(debug=True)
-expose_app = app
