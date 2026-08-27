@@ -18,8 +18,6 @@ body {
 .custom-navbar {
   background-color: #0b0f14;
   padding: 18px 0;
-  position: relative;     /* ઉમેરો: z-index કામ કરવા માટે */
-  z-index: 1050;
 }
 .custom-navbar .navbar-brand {
   font-size: 22px;
