@@ -1582,6 +1582,7 @@ from flask import Flask, render_template, request
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
+        # 1. HTML ફોર્મમાંથી ડેટા મેળવવો
         first_name = request.form.get("first_name", "").strip()
         last_name = request.form.get("last_name", "").strip()
         name = f"{first_name} {last_name}".strip()
@@ -1589,26 +1590,40 @@ def contact():
         subject = request.form.get("subject", "").strip()
         message = request.form.get("message", "").strip()
 
+        # ===============================
         # 1️⃣ SAVE TO DATABASE
-        cur = db.cursor()
-        cur.execute(
-            "INSERT INTO feedback (name, email, subject, message) VALUES (%s,%s,%s,%s)",
-            (name, email, subject, message)
-        )
-        db.commit()
-        cur.close()
-
-        # 2️⃣ EMAIL CONFIG (Use environment variables for credentials)
-        SENDER_EMAIL = os.getenv("SENDER_EMAIL", "narotamdharaviya65@gmail.com")
-        APP_PASSWORD = os.getenv("APP_PASSWORD", "wckt cxmm xvdu vulf") 
-        ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "narotamdharaviya65@gmail.com")
-
+        # ===============================
         try:
-            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-                server.login(SENDER_EMAIL, APP_PASSWORD)
+            cur = db.cursor()
+            cur.execute(
+                "INSERT INTO feedback (name, email, subject, message) VALUES (%s,%s,%s,%s)",
+                (name, email, subject, message)
+            )
+            db.commit()
+            cur.close()
+            print("DATABASE SAVED ✅")
+        except Exception as db_err:
+            print("DATABASE ERROR ❌", db_err)
 
-                # 3️⃣ EMAIL TO ADMIN
-                admin_body = f"""New Contact Request 📩
+        # ===============================
+        # 2️⃣ EMAIL CONFIG
+        # ===============================
+        SENDER_EMAIL = "narotamdharaviya65@gmail.com"
+        # ⚠️ તમારો નવો 16 અક્ષરનો App Password અહીં વચ્ચે જગ્યા રાખ્યા વિના મૂકો
+        APP_PASSWORD = "voeb nvlt zfjh ucmn".replace(" ", "") 
+        ADMIN_EMAIL = "narotamdharaviya65@gmail.com"
+
+        # ===============================
+        # 3️⃣ SEND EMAIL (SMTP via TLS 587)
+        # ===============================
+        try:
+            # Gmail Server connection (Port 587 TLS is more reliable)
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.starttls()
+            server.login(SENDER_EMAIL, APP_PASSWORD)
+
+            # --- A. Email to Admin ---
+            admin_body = f"""New Contact Request 📩
 
 Name   : {name}
 Email  : {email}
@@ -1617,20 +1632,16 @@ Subject: {subject}
 Message:
 {message}
 """
-                admin_msg = MIMEText(admin_body)
-                admin_msg["Subject"] = f"New Contact: {subject}"
-                admin_msg["From"] = f"Job Portal <{SENDER_EMAIL}>"
-                admin_msg["To"] = ADMIN_EMAIL
-                admin_msg["Reply-To"] = email
+            admin_msg = MIMEText(admin_body)
+            admin_msg["Subject"] = f"New Contact: {subject}"
+            admin_msg["From"] = SENDER_EMAIL
+            admin_msg["To"] = ADMIN_EMAIL
+            admin_msg["Reply-To"] = email
 
-                server.sendmail(
-                    SENDER_EMAIL,
-                    ADMIN_EMAIL,
-                    admin_msg.as_string()
-                )
+            server.sendmail(SENDER_EMAIL, ADMIN_EMAIL, admin_msg.as_string())
 
-                # 4️⃣ AUTO-REPLY TO USER
-                user_body = f"""Hi {name},
+            # --- B. Auto-Reply to User ---
+            user_body = f"""Hi {name},
 
 Thank you for contacting Job Portal! 👋
 
@@ -1644,21 +1655,20 @@ Our support team is reviewing your request and will get back to you as soon as p
 Best regards,
 Job Portal Support Team
 """
-                user_msg = MIMEText(user_body)
-                user_msg["Subject"] = "We received your request – Job Portal"
-                user_msg["From"] = f"Job Portal <{SENDER_EMAIL}>"
-                user_msg["To"] = email
+            user_msg = MIMEText(user_body)
+            user_msg["Subject"] = "We received your request – Job Portal"
+            user_msg["From"] = SENDER_EMAIL
+            user_msg["To"] = email
 
-                server.sendmail(
-                    SENDER_EMAIL,
-                    email,
-                    user_msg.as_string()
-                )
+            server.sendmail(SENDER_EMAIL, email, user_msg.as_string())
 
-                print("ADMIN + USER EMAIL SENT ✅")
+            server.quit()
+            print("ADMIN + USER EMAIL SENT SUCCESSFULLY ✅")
 
+        except smtplib.SMTPAuthenticationError:
+            print("❌ EMAIL ERROR: App Password અથવા Email ખોટો છે!")
         except Exception as e:
-            print("EMAIL ERROR ❌", e)
+            print("❌ EMAIL ERROR DETAILS:", str(e))
 
         return render_template("contact.html", success=True)
 
