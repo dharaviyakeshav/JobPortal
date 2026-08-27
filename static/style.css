@@ -1,0 +1,659 @@
+/* ===== Global Styles ===== */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f0f2f5;
+  color: #1f1f1f;
+  margin: 0;
+  padding: 0;
+}
+.job-scroll-area {
+  max-height: 500px;   /* tu isko 400 / 600 bhi kar sakta hai */
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+
+
+/* ===== Navbar ===== */
+.custom-navbar {
+  background-color: #0b0f14;
+  padding: 18px 0;
+}
+.custom-navbar .navbar-brand {
+  font-size: 22px;
+  color: #fff;
+}
+.custom-navbar .nav-link {
+  color: #cfd3dc !important;
+  font-weight: 500;
+}
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link.active {
+  color: #ffffff !important;
+}
+.nav-login {
+  color: #cfd3dc;
+  text-decoration: none;
+  font-weight: 500;
+}
+.nav-login:hover {
+  color: #ffffff;
+}
+.btn-register {
+  padding: 8px 22px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.navbar-toggler {
+  border: none;
+}
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+
+/* Logo size + smooth look */
+.navbar-logo {
+  height: 48px;
+  width: auto;
+  border-radius: 50%;
+  background: #fff;
+  padding: 2px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect */
+.navbar-logo:hover {
+  transform: scale(1.08);
+}
+
+/* Text styling */
+.logo-text {
+  font-weight: 700;
+  font-size: 20px;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+/* ===== Hero Sections ===== */
+.hero-section {
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+              url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d') center/cover;
+  padding: 90px 0;
+  color: #fff;
+  text-align: center;
+}
+.hero-section h1 {
+  font-weight: 700;
+  font-size: 3rem;
+}
+.hero-section p {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: #d0d0d0;
+}
+
+/* ===== Search Box ===== */
+.search-box {
+  max-width: 900px;
+  margin: auto;
+}
+
+/* ===== Job Cards ===== */
+.job-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
+  transition: 0.3s;
+}
+.job-card:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+.salary {
+  font-weight: 600;
+  color: #198754;
+}
+
+/* ===== Category Cards ===== */
+.category-card {
+  background: #fff;
+  padding: 25px 15px;
+  border-radius: 10px;
+  transition: 0.3s;
+  text-align: center;
+}
+.category-card i {
+  font-size: 28px;
+  color: #198754;
+  margin-bottom: 10px;
+}
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* ===== CTA Sections ===== */
+.cta-section {
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+              url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d') center/cover;
+  padding: 70px 0;
+  text-align: center;
+  color: #fff;
+}
+.cta-section a {
+  text-decoration: none;
+}
+
+/* ===== Testimonial Cards ===== */
+.testimonial-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* ===== Blog Cards ===== */
+.blog-card {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+.blog-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* ===== Jobs Header ===== */
+.jobs-header {
+  background: #0b0f14;
+  padding: 60px 0;
+}
+
+/* ===== Filter Box ===== */
+.filter-box {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* ===== Hiring Box ===== */
+.hiring-box {
+  background: #0b0f14;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* ===== Job List Card ===== */
+.job-list-card {
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.job-list-card p {
+  margin: 0;
+  color: #6c757d;
+}
+
+/* ===== Company Card ===== */
+.company-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+/* ===== Story Section (About Us) ===== */
+.story-section {
+  padding: 70px 0;
+}
+.story-section img {
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+/* ===== Values Section (About Us) ===== */
+.values-section {
+  padding: 70px 0;
+  background: #f8f9fa;
+  text-align: center;
+}
+.value-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px 20px;
+  margin: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+.value-card i {
+  font-size: 36px;
+  color: #00c7b7;
+  margin-bottom: 15px;
+}
+
+/* ===== Team Section ===== */
+.team-section {
+  padding: 70px 0;
+  text-align: center;
+}
+.team-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+.team-card img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+/* ===== Contact Form Section ===== */
+
+
+/* ===== Contact Info Section ===== */
+ .glass-card {
+      background: rgb(228, 222, 222);      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      padding: 40px;
+     color: #000000;
+      height: 100%;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* MAP FULL HEIGHT FIX */
+    .map-container {
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      border-radius: 20px;
+      border: none;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+
+    /* CONTACT INFO */
+    .info-card {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 30px;
+      text-align: center;
+      color: #000000;
+      transition: 0.3s;
+      height: 100%;
+    }
+
+    .info-card:hover {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,0.12);
+    }
+
+    .icon-circle {
+      width: 65px;
+      height: 65px;
+      background: linear-gradient(135deg, #00c7b7, #00afa3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin: 0 auto 15px;
+      color: #0a0a0a;
+      box-shadow: 0 5px 20px rgba(0,199,183,0.4);
+    }
+
+    .form-control::placeholder {
+      color: rgba(22, 20, 20, 0.7);
+    }
+
+
+    .btn-contact {
+      background: linear-gradient(135deg, #00c7b7, #00afa3);
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+/* ===== Unified Button Styles ===== */
+.btn, 
+.btn-register, 
+.btn-contact, 
+.cta-section a, 
+.job-card button {
+  background-color: #00c7b7 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.btn:hover, 
+.btn-register:hover, 
+.btn-contact:hover, 
+.cta-section a:hover, 
+.job-card button:hover {
+  background-color: #00afa3 !important;
+  color: #fff !important;
+  text-decoration: none;
+}
+
+/* SAME register-container style */
+    .register-container {
+      background: rgba(0,0,0,0.55);
+      border-radius: 15px;
+      padding: 35px 40px;
+      margin: 60px auto;
+      max-width: 720px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+    }
+
+    
+    .form-label {
+      font-size: 0.9rem;
+      color: #ddd;
+      margin-bottom: 6px;
+    }
+
+    .form-control, .form-select {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+.mb-3::placeholder
+{
+  color: black;
+}
+    .register-container h3 {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+   
+    .form-control::placeholder {
+      color: #aaa;
+    }
+    .btn-register {
+      background-color: #00c7b7;
+      color: #fff;
+      border: none;
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+    }
+  
+    .login-link {
+      color: #00c7b7;
+      text-decoration: none;
+    }
+    .login-link:hover {
+      text-decoration: underline;
+    }
+    .scroll-anim {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 0.8s ease;
+}
+
+.scroll-anim.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+    /* ફોટો મુજબની નવી કેટેગરી ડિઝાઇન */
+.category-section {
+    background-color: #f2f8f9 !important; /* હળવો આસમાની બેકગ્રાઉન્ડ */
+}
+
+.category-card {
+    background: #ffffff;
+    border: none;
+    border-radius: 16px; /* વળાંકવાળા ખૂણા */
+    padding: 40px 20px;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* હળવો શેડો */
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.category-card i {
+    font-size: 2.5rem;
+    color: #2b967d; /* ફોટો જેવો લીલો કલર */
+    margin-bottom: 20px;
+}
+
+.category-card h6 {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #000;
+}
+
+.category-badge {
+    background-color: #eaf6f3; /* આછો લીલો બેકગ્રાઉન્ડ */
+    color: #2b967d;
+    padding: 6px 15px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+    
+    
+    /* Testimonials Section Styling */
+.testimonials-section {
+    background-color: #f2f8f9; /* હળવો આસમાની બેકગ્રાઉન્ડ */
+    padding: 80px 0;
+}
+
+.testimonial-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 35px;
+    border: none;
+    position: relative;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+}
+
+.testimonial-card .stars {
+    color: #ffc107; /* ગોલ્ડન સ્ટાર્સ */
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.testimonial-card h5 {
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.testimonial-card p {
+    font-style: italic;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* ક્વોટ આઇકોન (Quote Icon) */
+.quote-icon {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    font-size: 2.5rem;
+    color: #38a189; /* ગ્રીન કલર */
+    opacity: 0.2;
+}
+
+/* પ્રોફાઇલ સેક્શન */
+.client-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.client-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #eee;
+}
+
+.client-details h6 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.client-details small {
+    color: #888;
+}
+
+/* ===== Responsive ===== */
+/* ===== Mobile Navbar Button Position Fix ===== */
+@media (max-width: 991px) {
+  .custom-navbar .collapse {
+    text-align: center;
+   
+  }
+
+  .custom-navbar .d-flex {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 15px;
+    gap: 10px;
+  }
+
+  .custom-navbar .nav-login {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 6px;
+    background: #1a1f26;
+    color: #fff;
+  }
+
+  .custom-navbar .btn {
+    width: 100%;
+  }
+}
+
+/* ===== Mobile Navbar Button Position Fix ===== */
+@media (max-width: 576px) {
+  .custom-navbar .collapse {
+    text-align: center;
+  }
+
+  .custom-navbar .d-flex {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 15px;
+    gap: 10px;
+  }
+
+  .custom-navbar .nav-login {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 6px;
+    background: #1a1f26;
+    color: #fff;
+  }
+
+  .custom-navbar .btn {
+    width: 100%;
+  }
+}
+
+
+/* ===== Opening Animation / Preloader (ADDED) ===== */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0b0f14;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loader {
+  display: flex;
+  gap: 10px;
+}
+
+.loader span {
+  width: 14px;
+  height: 14px;
+  background: #00c7b7;
+  border-radius: 50%;
+  animation: bounce 0.8s infinite alternate;
+}
+
+.loader span:nth-child(2) { animation-delay: 0.2s; }
+.loader span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  from { transform: translateY(0); opacity: 0.5; }
+  to   { transform: translateY(-15px); opacity: 1; }
+}
+
+body.loaded {
+  animation: pageFade 0.6s ease-in-out;
+}
+
+@keyframes pageFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* Master Theme */

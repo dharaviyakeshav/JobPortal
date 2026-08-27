@@ -1,0 +1,285 @@
+/* ============================= */
+/* GLOBAL BACKGROUND THEME */
+/* ============================= */
+
+body {
+    background: linear-gradient(180deg, #000000, #0e3e44);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    color: #fff;
+}
+
+
+/* ============================= */
+/* NAVBAR */
+/* ============================= */
+
+.navbar {
+    background-color: #111827;
+}
+
+.navbar-dark .nav-link {
+    color: rgba(255,255,255,0.8);
+    transition: 0.3s;
+    font-weight: 500;
+    margin-right: 15px;
+}
+
+.navbar-dark .nav-link:hover {
+    color: #fff;
+}
+
+.navbar-brand {
+    letter-spacing: 1px;
+    color: #00c7b7 !important;
+}
+
+
+/* ============================= */
+/* REUSABLE GLASS CONTAINER */
+/* ============================= */
+
+.glass-container {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+
+/* ============================= */
+/* DASHBOARD STAT CARDS */
+/* ============================= */
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    transition: 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.stat-card h6 {
+    margin-top: 12px;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #d1d5db;
+}
+
+.stat-card h2 {
+    margin-top: 6px;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+
+/* ============================= */
+/* TABLE DESIGN */
+/* ============================= */
+
+/* ============================= */
+/* GLASS TABLE CELLS (TD) */
+/* ============================= */
+
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0 12px;
+}
+
+.custom-table tbody tr {
+    background: transparent; /* row transparent rahe */
+}
+
+.custom-table tbody td {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    color: #ffffff !important;
+    padding: 16px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Left rounded corner */
+.custom-table tbody tr td:first-child {
+    border-left: 1px solid rgba(224, 219, 219, 0.15);
+    border-radius: 14px 0 0 14px;
+}
+
+/* Right rounded corner */
+.custom-table tbody tr td:last-child {
+    border-right: 1px solid rgba(255,255,255,0.15);
+    border-radius: 0 14px 14px 0;
+}
+
+/* Hover Effect */
+.custom-table tbody tr:hover td {
+    background: rgba(255,255,255,0.18);
+    transition: 0.3s ease;
+}
+
+/* ============================= */
+/* BADGES */
+/* ============================= */
+
+.badge-custom {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-blue { background: rgba(13,110,253,0.2); color: #0d6efd; }
+.badge-approved { background: rgba(25,135,84,0.2); color: #198754; }
+.badge-pending { background: rgba(255,152,0,0.2); color: #ef6c00; }
+
+
+/* ============================= */
+/* BUTTONS */
+/* ============================= */
+
+.theme-btn {
+    background: #00c7b7;
+    color: #000;
+    padding: 6px 14px;
+    border-radius: 5px;
+    border: none;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.theme-btn:hover {
+    background: #00a89a;
+    color: #000;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 5px;
+    border: none;
+}
+
+.delete-btn:hover {
+    background: #b02a37;
+}
+
+
+/* ============================= */
+/* FORMS */
+/* ============================= */
+
+.form-label {
+    font-weight: 600;
+    color: #fff;
+}
+
+.form-control,
+.form-select {
+    border-radius: 10px;
+    padding: 12px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0,199,183,0.25);
+    border-color: #00c7b7;
+}
+
+
+/* ============================= */
+/* SIDEBAR */
+/* ============================= */
+
+.sidebar {
+    height: 100vh;
+    background: linear-gradient(180deg, #00c7b7, #232525);
+    color: white;
+    position: fixed;
+    width: 250px;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.sidebar h4 {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: rgba(255,255,255,0.15);
+    padding-left: 25px;
+}
+
+
+/* ============================= */
+/* MAIN CONTENT */
+/* ============================= */
+
+.main-content {
+    margin-left: 250px;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+
+/* ============================= */
+/* TOPBAR */
+/* ============================= */
+
+.topbar {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+}
+
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 992px) {
+
+    .sidebar {
+        left: -250px;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .menu-btn {
+        display: block;
+        font-size: 22px;
+        cursor: pointer;
+    }
+}
