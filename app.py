@@ -40,8 +40,8 @@ from email.mime.text import MIMEText
 # ---------------- OTP EMAIL (FIXED FOR RENDER) ----------------
 def send_email(to_email, subject, body):
     """Send email through Gmail SMTP. Configure GMAIL_EMAIL and GMAIL_APP_PASSWORD on Render."""
-    sender = os.getenv("GMAIL_EMAIL")
-    password = os.getenv("GMAIL_APP_PASSWORD")
+    sender = os.getenv("narotamdharaviya65@gmqil.com")
+    password = os.getenv("voeb nvlt zfjh ucmn")
     if not sender or not password:
         print("EMAIL ERROR: GMAIL_EMAIL/GMAIL_APP_PASSWORD are missing on Render.")
         return False
