@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Personal Information</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='/favicion.png') }}">
+
+  <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<style>
+body{
+ background: linear-gradient(120deg, #000000, #0e3e44);
+  color:#fff;
+}
+</style>
+
+<body>
+{% include "header.html" %}
+
+<div class="register-container">
+  <h3>Personal Information</h3>
+
+<form method="POST" enctype="multipart/form-data">
+    <!-- Phone -->
+    <div class="mb-3">
+      <label class="form-label">Phone Number</label>
+      <input type="text" name="phone" class="form-control"
+             value="{{ profile.phone if profile else '' }}" required>
+    </div>
+
+    <!-- Gender -->
+    <div class="mb-3">
+      <label class="form-label">Gender</label>
+      <select name="gender" class="form-control" required>
+        <option value="">Select</option>
+        <option value="Male" {{ 'selected' if profile and profile.gender=='Male' }}>Male</option>
+        <option value="Female" {{ 'selected' if profile and profile.gender=='Female' }}>Female</option>
+        <option value="Other" {{ 'selected' if profile and profile.gender=='Other' }}>Other</option>
+      </select>
+    </div>
+
+    <!-- DOB -->
+    <div class="mb-3">
+      <label class="form-label">Date of Birth</label>
+      <input type="date" name="dob" class="form-control"
+             value="{{ profile.date_of_birth if profile else '' }}" required>
+    </div>
+
+    <!-- Location -->
+    <div class="mb-3">
+      <label class="form-label">Location</label>
+      <input type="text" name="location" class="form-control"
+             value="{{ profile.location if profile else '' }}"
+             placeholder="City, Country" required>
+    </div>
+
+    <!-- Experience -->
+    <div class="mb-3">
+      <label class="form-label">Experience Level</label>
+      <select name="experience" class="form-control">
+        <option {{ 'selected' if profile and profile.experience_level=='Fresher' }}>Fresher</option>
+        <option {{ 'selected' if profile and profile.experience_level=='1-3 Years' }}>1-3 Years</option>
+        <option {{ 'selected' if profile and profile.experience_level=='3-5 Years' }}>3-5 Years</option>
+        <option {{ 'selected' if profile and profile.experience_level=='5+ Years' }}>5+ Years</option>
+      </select>
+    </div>
+
+    <!-- Job Title -->
+    <div class="mb-3">
+      <label class="form-label">Current Job Title</label>
+      <input type="text" name="job_title" class="form-control"
+             value="{{ profile.current_job_title if profile else '' }}">
+    </div>
+
+    <!-- Salary -->
+    <div class="mb-3">
+      <label class="form-label">Expected Salary</label>
+      <input type="text" name="salary" class="form-control"
+             value="{{ profile.expected_salary if profile else '' }}"
+             placeholder="₹ / $">
+    </div>
+
+    <!-- Skills -->
+    <div class="mb-3">
+      <label class="form-label">Skills</label>
+      <textarea name="skills" class="form-control"
+                placeholder="Python, Flask, SQL">{{ profile.skills if profile else '' }}</textarea>
+    </div>
+
+    <!-- LinkedIn -->
+    <div class="mb-3">
+      <label class="form-label">LinkedIn Profile</label>
+      <input type="url" name="linkedin" class="form-control"
+             value="{{ profile.linkedin if profile else '' }}">
+    </div>
+
+    <!-- Portfolio -->
+    <div class="mb-3">
+      <label class="form-label">Portfolio / Website</label>
+      <input type="url" name="portfolio" class="form-control"
+             value="{{ profile.portfolio if profile else '' }}">
+    </div>
+
+    <!-- Resume Upload -->
+<div class="mb-3">
+  <label class="form-label">Upload Resume (PDF/DOC)</label>
+  <input type="file" name="resume" class="form-control" accept=".pdf,.doc,.docx">
+</div>
+    <!-- Button -->
+    <button type="submit" class="btn btn-register w-100">
+      {{ 'Update Information' if profile else 'Save & Continue' }}
+    </button>
+
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>

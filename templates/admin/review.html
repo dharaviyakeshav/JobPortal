@@ -1,0 +1,58 @@
+{% extends "admin/base.html" %}
+{% block title %}Manage Reviews{% endblock %}
+
+{% block content %}
+<div class="glass-container">
+  <div class="admin-card-container">
+    <h2 class="mb-4 text-white">⭐ User Reviews</h2>
+
+    <div class="table-responsive">
+      <table class="table custom-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Review</th>
+            <th>Rating</th>
+            <th>Date</th>
+            <th width="120">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for review in reviews %}
+          <tr>
+            <td>#{{ review.id }}</td>
+            <td>{{ review.name }}</td>
+            <td style="max-width:250px;">
+              {{ review.review[:120] }}
+              {% if review.review|length > 120 %}...{% endif %}
+            </td>
+            <td>
+              {% for i in range(review.rating) %}
+                ⭐
+              {% endfor %}
+            </td>
+            <td>{{ review.created_at }}</td>
+            <td>
+              <form action="{{ url_for('admin_delete_review', id=review.id) }}"
+                    method="POST"
+                    onsubmit="return confirm('Delete this review?')">
+                <button type="submit" class="delete-btn btn-sm">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% if not reviews %}
+          <tr>
+            <td colspan="6" class="text-center text-muted">No reviews found.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Manage Users{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="admin-card-container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+      <h2 class="text-white">All Users</h2>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table custom-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>User Info</th>
+            <th>Contact</th>
+            <th>Account</th>
+            <th>Status</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ loop.index }}</td>
+
+            <!-- USER INFO -->
+            <td>
+              <strong>{{ user.name }}</strong><br>
+              <small class="text-white">User ID: {{ user.id }}</small>
+            </td>
+
+            <!-- CONTACT -->
+            <td>
+              {{ user.email }}<br>
+              <small class="text-white">{{ user.mobile if user.mobile else 'N/A' }}</small>
+            </td>
+
+            <!-- ACCOUNT -->
+            <td>
+              <small class="text-white">
+                Joined: {{ user.created_at }}<br>
+                Role: {{ user.role if user.role else 'User' }}
+              </small>
+            </td>
+
+            <!-- STATUS -->
+            <td>
+              <strong>{{ user.status }}</strong>
+            </td>
+
+            <!-- ACTION -->
+            <td class="text-center">
+              <form action="{{ url_for('admin_delete_user', id=user.id) }}" method="POST" onsubmit="return confirm('Are you sure to Delete User?');">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

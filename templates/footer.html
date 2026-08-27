@@ -1,0 +1,150 @@
+<style>
+  .star-rating {
+  direction: rtl;
+  display: inline-flex;
+}
+
+.star-rating input {
+  display: none;
+}
+
+.star-rating label {
+  font-size: 28px;
+  color: #ccc;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #ffc107;
+}
+</style>
+<footer class="bg-dark text-light pt-5">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-3">
+        <h6>Quick Links</h6>
+        <ul class="list-unstyled">
+          {% for link in footer["Quick Links"] %}
+          <li>
+            <a href="{{ link.url }}" class="text-light">
+              {{ link.title }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="col-md-3">
+        <h6>Company</h6>
+        <ul class="list-unstyled">
+          {% for link in footer["Company"] %}
+          <li>
+            <a href="{{ link.url }}" class="text-light">
+              {{ link.title }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="col-md-3">
+        <h6>Support</h6>
+        <ul class="list-unstyled">
+          {% for link in footer["Support"] %}
+          <li>
+            <a href="{{ link.url }}" class="text-light">
+              {{ link.title }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-3">
+  <h6>Follow Us</h6>
+
+  <div class="d-flex gap-3 mt-3">
+
+    <a href="https://www.facebook.com/" class="text-light fs-5">
+      <i class="bi bi-facebook"></i>
+    </a>
+
+    <a href="https://www.instagram.com/" class="text-light fs-5">
+      <i class="bi bi-instagram"></i>
+    </a>
+
+    <a href="https://x.com/" class="text-light fs-5">
+      <i class="bi bi-twitter-x"></i>
+    </a>
+
+    <a href="https://in.linkedin.com/" class="text-light fs-5">
+      <i class="bi bi-linkedin"></i>
+    </a>
+
+  </div>
+</div>
+  <hr class="border-secondary mt-4">
+{% if session.get("user_id") %}
+<div class="card p-3 mt-3 shadow-sm">
+
+  <h6 class="mb-3">⭐ Rate Our Website</h6>
+
+  <!-- Review Form -->
+  <form method="POST" action="{{ url_for('submit_review') }}">
+    
+   <div class="star-rating mb-2">
+    <input type="radio" name="rating" value="5" id="star5">
+    <label for="star5">★</label>
+
+    <input type="radio" name="rating" value="4" id="star4">
+    <label for="star4">★</label>
+
+    <input type="radio" name="rating" value="3" id="star3">
+    <label for="star3">★</label>
+
+    <input type="radio" name="rating" value="2" id="star2">
+    <label for="star2">★</label>
+
+    <input type="radio" name="rating" value="1" id="star1">
+    <label for="star1">★</label>
+  </div>
+
+  <!-- Review Text -->
+  <textarea name="review" class="form-control mb-2"
+    placeholder="Write your review..." required></textarea>
+
+
+    <!-- Buttons -->
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-success btn-sm">
+        Submit / Update
+      </button>
+
+      <a href="{{ url_for('delete_review') }}"
+         class="btn btn-danger btn-sm"
+         onclick="return confirm('Delete your review?')">
+        Delete
+      </a>
+    </div>
+
+  </form>
+</div>
+
+{% else %}
+<div class="text-center mt-3">
+  <a href="{{ url_for('login') }}" class="text-success">
+    Login to rate our website
+  </a>
+</div>
+{% endif %}
+
+   <hr class="border-secondary mt-4">
+
+    <p class="text-center small mb-0">
+      © 2025 Job Portal. All rights reserved.
+    </p>
+  </div>
+</footer>

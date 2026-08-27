@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile | Job Portal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
+                url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d') center/cover;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, .08);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .5);
+            border: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: #0d6efd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include "header.html" %}
+
+    <div class="container py-5">
+
+        <!-- USER HEADER -->
+        <div class="glass mb-4 text-center">
+            <div class="avatar mx-auto mb-3">
+                {{ user.name[0] }}
+            </div>
+
+            <h3>{{ user.name }}</h3>
+            <p class="mb-1">{{ user.email }}</p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <!-- LEFT INFO -->
+            <div class="col-lg-4">
+                <div class="glass h-100">
+                    <h5 class="mb-3"><i class="bi bi-person-lines-fill"></i> Personal Info</h5>
+
+                    {% if profile %}
+                    <p><strong>Phone:</strong> {{ profile.phone }}</p>
+                    <p><strong>Gender:</strong> {{ profile.gender }}</p>
+                    <p><strong>DOB:</strong> {{ profile.date_of_birth }}</p>
+                    <p><strong>Location:</strong> {{ profile.location }}</p>
+                    {% else %}
+                    <p class="text-warning">Profile not completed.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- RIGHT INFO -->
+            <div class="col-lg-8">
+                <div class="glass">
+                    <h5 class="mb-3"><i class="bi bi-briefcase-fill"></i> Career Information</h5>
+
+
+                    {% if profile %}
+                    <div class="row">
+                        <div class="col-md-6"><strong>Experience:</strong> {{ profile.experience_level }}</div>
+                        <div class="col-md-6"><strong>Current Role:</strong> {{ profile.current_job_title }}</div>
+
+                        <div class="col-md-6"><strong>Expected Salary:</strong> {{ profile.expected_salary }}</div>
+
+                        <div class="col-md-12 mt-3">
+                            <strong>Skills:</strong><br>
+                            <span class="badge bg-primary">{{ profile.skills }}</span>
+                        </div>
+                    </div>
+
+                    {% if profile.linkedin %}
+                    <a href="{{ profile.linkedin }}" target="_blank" class="btn btn-primary btn-sm mt-3">
+                        <i class="bi bi-linkedin"></i> LinkedIn
+                    </a>
+                    {% endif %}
+
+                    {% else %}
+                    <p class="text-warning">Career details not available.</p>
+                    {% endif %}
+                    {% if profile and profile.resume %}
+                        <a href="{{ url_for('static', filename='resumes/' + profile.resume) }}" target="_blank"
+                            class="btn btn-success btn-sm mt-3" >
+                            <i class="bi bi-file-earmark-pdf"></i> View Resume
+                        </a>
+                    {% else %}
+                    <p class="text-warning mt-2">Resume not uploaded</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ACCEPT / REJECT BUTTONS (only company can see) -->
+        {% if session.get("role") == "company" and application %}
+        <div class="glass mt-4 text-center">
+
+            {% if application.status != "accepted" %}
+            <a href="/application/{{ application.id }}/accept" class="btn btn-success me-2">
+                <i class="bi bi-check-circle"></i> Accept
+            </a>
+            {% endif %}
+
+            {% if application.status != "rejected" %}
+            <a href="/application/{{ application.id }}/reject" class="btn btn-danger">
+                <i class="bi bi-x-circle"></i> Reject
+            </a>
+            {% endif %}
+            {% if profile.resume %}
+            <a href="{{ url_for('static', filename='resumes/' + profile.resume) }}" target="_blank"
+                class="btn btn-success btn-sm mt-3">
+                <i class="bi bi-file-earmark-pdf"></i> View Resume
+            </a>
+            {% endif %}
+
+        </div>
+        {% endif %}
+
+        <!-- BACK BUTTON -->
+        <div class="text-center mt-4">
+            <a href="javascript:history.back()" class="btn btn-outline-light">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

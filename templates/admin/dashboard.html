@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/style.css">
+
+  <style>
+   /* ----------------------- */
+/* Admin Dashboard CSS     */
+/* ----------------------- */
+
+/* Body & Background */
+body {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d') center/cover;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Navbar - purana style hi rahe */
+.navbar {
+    background-color: #111827; /* dark navbar */
+}
+
+/* Glass container for dashboard */
+.dashboard-container {
+    max-width: 900px;
+    margin: 120px auto;
+    padding: 40px;
+    border-radius: 16px;
+
+    /* Glass effect */
+    background: rgba(31, 31, 31, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* Cards for stats (Jobs / Feedback / Admins) */
+.stat-card {
+    background: rgba(42, 42, 42, 0.65);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    /* Glass effect */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Card hover animation */
+.stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Card icons */
+.stat-card i {
+    font-size: 2rem;
+}
+
+/* Card title & number */
+.stat-card h6 {
+    margin-top: 12px;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #d1d5db;
+}
+
+.stat-card h2 {
+    margin-top: 6px;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+/* Individual icon colors */
+.icon-jobs {
+    color: #22c55e; /* green */
+}
+.icon-feedback {
+    color: #3b82f6; /* blue */
+}
+.icon-admin {
+    color: #f59e0b; /* yellow/orange */
+}
+
+/* Preloader (same as profile page) */
+#preloader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #111827;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+
+@keyframes bounce {
+    to {
+        transform: translateY(-12px);
+        opacity: 0.7;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dashboard-container {
+        margin: 80px 20px;
+        padding: 30px;
+    }
+
+    .stat-card h2 {
+        font-size: 1.5rem;
+    }
+
+    .stat-card h6 {
+        font-size: 0.9rem;
+    }
+}
+
+  </style>
+</head>
+
+<body>
+
+{% extends "admin/base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="glass-container">
+  <h2 class="text-center mb-4 text-white">👨‍💻 Admin Dashboard</h2>
+
+ <div class="row g-4">
+
+  <!-- JOBS -->
+  <div class="col-md-4">
+    <a href="/admin/jobs" class="text-decoration-none text-white">
+      <div class="stat-card">
+        <i class="bi bi-briefcase-fill fs-2 text-success"></i>
+        <h6>Total Jobs</h6>
+        <h2>{{ total_jobs }}</h2>
+      </div>
+    </a>
+  </div>
+
+  <!-- FEEDBACK -->
+  <div class="col-md-4">
+    <a href="/admin/feedback" class="text-decoration-none text-white">
+      <div class="stat-card">
+        <i class="bi bi-chat-left-text-fill fs-2 text-primary"></i>
+        <h6>Total Feedback</h6>
+        <h2>{{ total_feedback }}</h2>
+      </div>
+    </a>
+  </div>
+
+  <!-- BLOGS -->
+  <div class="col-md-4">
+    <a href="/admin/blogs" class="text-decoration-none text-white">
+      <div class="stat-card">
+        <i class="bi bi-newspaper fs-2 text-info"></i>
+        <h6>Blogs & News</h6>
+        <h2>{{ total_blogs }}</h2>
+      </div>
+    </a>
+  </div>
+
+  <!-- USERS -->
+  <div class="col-md-4">
+    <a href="/admin/users" class="text-decoration-none text-white">
+      <div class="stat-card">
+        <i class="bi bi-people-fill fs-2 text-warning"></i>
+        <h6>Total Users</h6>
+        <h2>{{ total_users }}</h2>
+      </div>
+    </a>
+  </div>
+
+  <!-- APPLICATIONS -->
+  <div class="col-md-4">
+    <a href="/admin/applications" class="text-decoration-none text-white">
+      <div class="stat-card">
+        <i class="bi bi-file-earmark-text-fill fs-2 text-danger"></i>
+        <h6>Job Applications</h6>
+        <h2>{{ total_applications }}</h2>
+      </div>
+    </a>
+  </div>
+
+</div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endblock %}
+</body>
+
+</html>

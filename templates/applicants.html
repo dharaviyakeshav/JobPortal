@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Applicants</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='/favicion.png') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<!-- PAGE HEADER -->
+<section class="jobs-header text-white text-center">
+    <h1 class="fw-bold">Applicants</h1>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="col-lg-9 mx-auto">
+
+            <div class="d-flex justify-content-between mb-3">
+                <small>Showing {{ applicants|length }} applicants</small>
+            </div>
+
+            <div class="job-scroll-area">
+
+                {% for a in applicants %}
+                <div class="job-list-card d-flex justify-content-between align-items-center">
+
+                    <!-- USER INFO -->
+                    <div>
+                        <h6 class="fw-bold mb-1">{{ a.name }}</h6>
+                        <p class="mb-0">
+                            {{ a.email }}
+                            {% if a.location %} · {{ a.location }}{% endif %}
+                            {% if a.experience_level %} · {{ a.experience_level }}{% endif %}
+                        </p>
+
+                        <!-- STATUS BADGE -->
+                        {% if a.status == 'accepted' %}
+                            <span class="badge bg-success mt-1">Accepted</span>
+                        {% elif a.status == 'rejected' %}
+                            <span class="badge bg-danger mt-1">Rejected</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark mt-1">Pending</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- ACTION BUTTONS -->
+                    <div class="job-actions d-flex gap-2">
+
+                        <!-- View Profile -->
+                        <a href="/user/{{ a.id }}"
+                           class="badge bg-info px-3 py-2 text-decoration-none text-dark">
+                            <i class="bi bi-person-lines-fill"></i> View Profile
+                        </a>
+
+                        <!-- Accept -->
+                        {% if a.status != 'accepted' %}
+                        <a href="/application/{{ a.application_id }}/accept"
+                           class="btn btn-sm btn-success">
+                            Accept
+                        </a>
+                        {% endif %}
+
+                        <!-- Reject -->
+                        {% if a.status != 'rejected' %}
+                        <a href="/application/{{ a.application_id }}/reject"
+                           class="btn btn-sm btn-danger">
+                            Reject
+                        </a>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+                {% else %}
+                <div class="alert alert-info">No applicants found.</div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include "footer.html" %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

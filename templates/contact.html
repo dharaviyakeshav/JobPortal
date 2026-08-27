@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Job Portal</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/style.css">
+
+ <style>/* Hero Section */
+.hero-section {
+    background-color: #000; /* બ્લેક બેકગ્રાઉન્ડ */
+    padding: 100px 0;
+}
+
+/* Contact Info Items (Icons & Text) */
+.contact-info-item {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.contact-info-item i {
+    font-size: 24px;
+    color: #2fb182; /* ટીલ કલર */
+}
+
+.contact-info-item h6 {
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.contact-info-item p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Form Box */
+.form-box-custom {
+    background-color: #c0cecd; /* આછો બ્લુ/ટીલ કલર */
+    border-radius: 15px;
+
+}
+
+.form-box-custom .form-control {
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+        color:black;
+}
+
+/* Button */
+.btn-teal {
+    background-color: #3b9b8e;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.btn-teal:hover {
+    background-color: #2d7a6f;
+    color: white;
+}
+label
+{
+  color: #000;
+}
+/* Map Wrapper */
+.map-wrapper {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}</style>
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<!-- HERO -->
+<section class="hero-section text-center">
+  <div class="container py-5">
+    <h1 class="display-4 fw-bold text-white">Contact Us</h1>
+  </div>
+</section>
+
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-6">
+        <h2 class="fw-bold mb-3 display-6">You Will Grow, You Will Succeed. We Promise That</h2>
+        <p class="text-muted mb-5">Pellentesque arcu facilisis nunc mi proin. Dignissim mattis in lectus tincidunt tincidunt ultrices. Diam convallis morbi pellentesque adipiscing.</p>
+
+        <div class="row g-4">
+          <div class="col-md-6 contact-info-item">
+            <i class="bi bi-telephone"></i>
+            <div>
+              <h6>Call for inquiry</h6>
+              <p>+91 91574 50848</p>
+            </div>
+          </div>
+          <div class="col-md-6 contact-info-item">
+            <i class="bi bi-envelope"></i>
+            <div>
+              <h6>Send us email</h6>
+              <p>jobportal@support.com</p>
+            </div>
+          </div>
+          <div class="col-md-6 contact-info-item">
+            <i class="bi bi-clock"></i>
+            <div>
+              <h6>Opening hours</h6>
+              <p>Mon - Fri: 10AM - 10PM</p>
+            </div>
+          </div>
+          <div class="col-md-6 contact-info-item">
+            <i class="bi bi-geo-alt"></i>
+            <div>
+              <h6>Office</h6>
+              <p>vsi jamnagar</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="form-box-custom p-4 p-md-5">
+          <h3 class="text-center fw-bold">Contact Info</h3>
+          <p class="text-center text-muted small mb-4">Nibh dis faucibus proin lacus tristique</p>
+          
+          <form method="POST">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label small fw-bold text-dark">First Name</label>
+                <input type="text" class="form-control" placeholder="Your name">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label small fw-bold text-dark">Last Name</label>
+                <input type="text" class="form-control" placeholder="Your last name">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-dark" >Email Address</label>
+              <input type="email" class="form-control" placeholder="Your E-mail address">
+            </div>
+            <div class="mb-4">
+              <label class="form-label small fw-bold text-dark">Message</label>
+              <textarea class="form-control" rows="4" placeholder="Your message..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-teal w-100 py-2">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="map-wrapper">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3686.5335403432177!2d70.05470117522223!3d22.4841567362062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39576aa9e78ecba5%3A0x417ba9101a4adf23!2sVidyasagar%20Infotech%20College!5e0!3m2!1sen!2sin!4v1773590513028!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% include "footer.html" %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

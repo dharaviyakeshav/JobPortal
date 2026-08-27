@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Job Portal</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../static/style.css">
+
+  <style>
+    body {
+     background: linear-gradient(120deg, #000000, #0e3e44);
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+
+  {% include "header.html" %}
+
+  <div class="register-container">
+    <h3>Create a New Account</h3>
+
+    <form method="POST">
+
+      <div class="mb-3">
+        <label class="form-label">Full Name </label>
+        <input type="text" class="form-control" name="name" placeholder="Enter full name or if company so company name" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-control" name="email" placeholder="Enter email" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Register As</label>
+        <select name="role" class="form-control">
+          <option value="user">Job Seeker (User)</option>
+          <option value="company">Employer (Company)</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
+
+        <small id="passMsg" class="text-danger"></small>
+      </div>
+      <button type="submit" class="btn btn-register mb-3">Register</button>
+
+      <p class="text-center text-light">Already have an account?
+        <a href="{{url_for('login') }}" class="login-link">Login</a>
+      </p>
+
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- SUCCESS POPUP -->
+  {% if success %}
+  <script>
+    Swal.fire({
+      icon: 'success',
+      title: 'Register Successful!',
+      text: 'Thank you so much for connecting with us',
+      confirmButtonText: 'Go to Login',
+      background: 'rgba(20,20,20,0.95)',
+      color: '#fff'
+    }).then(() => {
+      window.location.href = "{{ url_for('login') }}";
+    });
+  </script>
+  {% endif %}
+{% if error %}
+<script>
+Swal.fire({
+  icon: 'error',
+  title: 'Account Already Exists',
+  text: '{{ error }}',
+  confirmButtonText: 'Go to Login',
+  confirmButtonColor: '#00c7b7',
+  background: 'rgba(20,20,20,0.95)',
+  color: '#fff'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = "{{ url_for('login') }}";
+  }
+});
+</script>
+{% endif %}
+  <!-- OTP POPUP -->
+  {% if show_otp %}
+  <script>
+    Swal.fire({
+      title: 'Email Verification',
+      html: '<p style="opacity:.8">Enter OTP sent to your email</p>',
+      input: 'text',
+      inputPlaceholder: 'Enter OTP',
+      confirmButtonText: 'Verify OTP',
+      allowOutsideClick: false,
+      background: 'rgba(20,20,20,0.95)',
+      color: '#fff',
+      preConfirm: (otp) => {
+        if (!otp) {
+          Swal.showValidationMessage("OTP required!");
+          return false;
+        }
+
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "";
+
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "otp";
+        input.value = otp;
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+      }
+    });
+  </script>
+  {% endif %}
+
+  <!-- INVALID OTP -->
+  {% if otp_error %}
+  <script>
+    Swal.fire({
+      icon: 'error',
+      title: 'Invalid OTP',
+      text: 'Please enter correct OTP',
+      confirmButtonColor: '#dc3545'
+    });
+  </script>
+  {% endif %}
+<script>
+const password = document.getElementById("password");
+const confirmPassword = document.getElementById("confirmPassword");
+const msg = document.getElementById("passMsg");
+
+function validatePassword() {
+  const value = password.value;
+
+  const hasUpper = /[A-Z]/.test(value);
+  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+  const hasLength = value.length >= 8;
+  const match = value === confirmPassword.value;
+
+  if (!hasLength) {
+    msg.innerText = "Minimum 8 characters required";
+  }
+  else if (!hasUpper) {
+    msg.innerText = "At least 1 CAPITAL letter required";
+  }
+  else if (!hasSpecial) {
+    msg.innerText = "At least 1 special character required";
+  }
+  else if (!match) {
+    msg.innerText = "Passwords do not match";
+  }
+  else {
+    msg.innerText = "";
+  }
+}
+
+password.addEventListener("input", validatePassword);
+confirmPassword.addEventListener("input", validatePassword);
+</script>
+
+<script>
+document.querySelector("form").addEventListener("submit", function(e) {
+
+  const value = password.value;
+
+  const hasUpper = /[A-Z]/.test(value);
+  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+  const hasLength = value.length >= 8;
+  const match = value === confirmPassword.value;
+
+  if (!(hasUpper && hasSpecial && hasLength && match)) {
+    e.preventDefault();
+
+    Swal.fire({
+      icon: "error",
+      title: "Invalid Password",
+      text: "Password must be 8+ chars, include 1 capital, 1 special character & match confirm password.",
+      background: "rgba(20,20,20,0.95)",
+      color: "#fff"
+    });
+  }
+});
+</script>
+
+</body>
+
+</html>

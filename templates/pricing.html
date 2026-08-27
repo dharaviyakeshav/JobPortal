@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upgrade Your Account</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='/favicion.png') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="../static/style.css">
+
+    <style>
+        body {
+            background: linear-gradient(120deg, #000000, #0e3e44);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Same glass container as register/profile */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .plan-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 30px;
+            transition: 0.3s;
+            height: 100%;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-8px);
+            border-color: #0d6efd;
+            box-shadow: 0 10px 25px rgba(13,110,253,0.25);
+        }
+
+        .popular {
+            border: 2px solid #0d6efd;
+            position: relative;
+        }
+
+        .popular::after {
+            content: "MOST POPULAR";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0d6efd;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .btn-glass {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            border-radius: 10px;
+        }
+
+        .btn-glass:hover {
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+
+<body>
+{% include "header.html" %}
+
+<div class="container py-5">
+    <div class="glass-container">
+
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Simple Pricing for Everyone</h2>
+            <p class="text-white-50">Choose the plan that works best for you.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+
+            <!-- Basic -->
+            <div class="col-md-4">
+                <div class="plan-card text-center">
+                    <h4>Basic</h4>
+                    <h2 class="my-3">₹499</h2>
+                    <ul class="list-unstyled text-start mb-4">
+                        <li>✅ 10 Job Applications</li>
+                        <li>✅ Email Support</li>
+                        <li>❌ Direct Call</li>
+                    </ul>
+                    <button class="btn btn-glass w-100"
+                        onclick="openPaymentGateway('Basic', 499)">Select Basic</button>
+                </div>
+            </div>
+
+            <!-- Pro -->
+            <div class="col-md-4">
+                <div class="plan-card popular text-center">
+                    <h4>Pro</h4>
+                    <h2 class="my-3">₹999</h2>
+                    <ul class="list-unstyled text-start mb-4">
+                        <li>✅ Unlimited Applications</li>
+                        <li>✅ Priority Support</li>
+                        <li>✅ Verified Badge</li>
+                    </ul>
+                    <button class="btn btn-primary w-100"
+                        onclick="openPaymentGateway('Pro', 999)">Get Started</button>
+                </div>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="col-md-4">
+                <div class="plan-card text-center">
+                    <h4>Enterprise</h4>
+                    <h2 class="my-3">₹2499</h2>
+                    <ul class="list-unstyled text-start mb-4">
+                        <li>✅ All Pro Features</li>
+                        <li>✅ Personal Consultant</li>
+                        <li>✅ Resume Builder</li>
+                    </ul>
+                    <button class="btn btn-glass w-100"
+                        onclick="openPaymentGateway('Enterprise', 2499)">Go Enterprise</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- SAME JS (unchanged) -->
+<script>
+function openPaymentGateway(planName, amount) {
+
+    const upiID = "dharaviyakeshav@oksbi";
+    const upiName = "Job Portal";
+
+    const upiUrl =
+        `upi://pay?pa=${upiID}&pn=${encodeURIComponent(upiName)}&am=${amount}&cu=INR`;
+
+    const qrApiUrl =
+        `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+
+    Swal.fire({
+        title: `<span style="color:#fff">Activate ${planName} Plan</span>`,
+        width: 720,
+        background: "rgba(15,23,42,0.95)",
+        backdrop: "blur(12px)",
+        color: "#fff",
+        showCancelButton: true,
+        confirmButtonText: "Verify & Activate",
+        confirmButtonColor: "#00c7b7",
+
+        html: `
+        <div class="row g-4 align-items-center">
+
+            <!-- LEFT : CARD PREVIEW -->
+            <div class="col-md-6">
+
+                <div id="card-preview"
+                    style="
+                        background: linear-gradient(135deg,#0f172a,#1e293b);
+                        border-radius:16px;
+                        padding:20px;
+                        box-shadow:0 10px 25px rgba(0,0,0,0.6);
+                    ">
+
+                    <div class="small text-white-50 mb-3">Secure Card</div>
+
+                    <div id="prev-num" class="fs-5 mb-4">
+                        **** **** **** ****
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <span id="prev-name" class="small">CARD HOLDER</span>
+                        <span id="prev-exp" class="small">MM/YY</span>
+                    </div>
+                </div>
+
+                <!-- FORM -->
+                <input id="c_num"
+                    class="form-control mt-3 bg-dark text-white border-secondary"
+                    placeholder="Card Number" maxlength="19">
+
+                <input id="c_name"
+                    class="form-control mt-2 bg-dark text-white border-secondary"
+                    placeholder="Card Holder Name">
+
+                <div class="row g-2 mt-1">
+                    <div class="col-6">
+                        <input id="c_exp"
+                            class="form-control bg-dark text-white border-secondary"
+                            placeholder="MM/YY" maxlength="5">
+                    </div>
+                    <div class="col-6">
+                        <input id="c_cvv" type="password" maxlength="3"
+                            class="form-control bg-dark text-white border-secondary"
+                            placeholder="CVV">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- RIGHT : QR PAYMENT -->
+            <div class="col-md-6 text-center border-start border-secondary">
+
+                <p class="text-white-50 mb-2">Scan & Pay ₹${amount}</p>
+
+                <img src="${qrApiUrl}"
+                    style="width:180px;border-radius:12px;border:1px solid #444">
+
+                <p class="small text-white-50 mt-2">
+                    GPay • PhonePe • Paytm
+                </p>
+
+                <input id="utr_id"
+                    class="form-control mt-3 bg-dark text-white border-secondary"
+                    placeholder="Enter UTR after payment">
+            </div>
+        </div>
+        `,
+
+        didOpen: () => {
+
+            /* LIVE CARD UPDATE */
+
+            const num = document.getElementById("c_num");
+            const name = document.getElementById("c_name");
+            const exp = document.getElementById("c_exp");
+
+            num.addEventListener("input", e => {
+                let val = e.target.value
+                    .replace(/\D/g, "")
+                    .replace(/(.{4})/g, "$1 ")
+                    .trim();
+
+                e.target.value = val;
+                document.getElementById("prev-num").innerText =
+                    val || "**** **** **** ****";
+            });
+
+            name.addEventListener("input", e => {
+                document.getElementById("prev-name").innerText =
+                    e.target.value.toUpperCase() || "CARD HOLDER";
+            });
+
+            exp.addEventListener("input", e => {
+                document.getElementById("prev-exp").innerText =
+                    e.target.value || "MM/YY";
+            });
+        },
+
+        preConfirm: () => {
+
+            const utr = document.getElementById("utr_id").value.trim();
+
+            if (!utr) {
+                Swal.showValidationMessage("⚠️ Enter Transaction ID / UTR");
+                return false;
+            }
+
+            return fetch("/process-payment", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ plan: planName, utr: utr })
+            }).then(res => res.json());
+        }
+    }).then(result => {
+
+        if (result.isConfirmed) {
+
+            /* SUCCESS POPUP — SAME GLASS THEME */
+
+            Swal.fire({
+                title: "Plan Activated 🎉",
+                text: `${planName} plan is now active`,
+                icon: "success",
+                background: "rgba(15,23,42,0.95)",
+                color: "#fff",
+                confirmButtonColor: "#00c7b7",
+                backdrop: "blur(12px)"
+            }).then(() => {
+                window.location.href = "/jobs";
+            });
+        }
+    });
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
