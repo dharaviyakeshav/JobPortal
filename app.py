@@ -1574,10 +1574,7 @@ def admin_delete_user(id):
 
     return redirect("/admin/user")
     #--------------contact page------------------
-import os
-import smtplib
-from email.mime.text import MIMEText
-from flask import Flask, render_template, request
+
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
