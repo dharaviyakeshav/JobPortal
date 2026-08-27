@@ -10,70 +10,72 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="../static/style.css">
 
- <style>/* Hero Section */
-.hero-section {
-    background-color: #000; /* બ્લેક બેકગ્રાઉન્ડ */
-    padding: 100px 0;
-}
+  <style>
+    /* Hero Section */
+    .hero-section {
+        background-color: #000;
+        padding: 100px 0;
+    }
 
-/* Contact Info Items (Icons & Text) */
-.contact-info-item {
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
-}
+    /* Contact Info Items */
+    .contact-info-item {
+        display: flex;
+        gap: 15px;
+        align-items: flex-start;
+    }
 
-.contact-info-item i {
-    font-size: 24px;
-    color: #2fb182; /* ટીલ કલર */
-}
+    .contact-info-item i {
+        font-size: 24px;
+        color: #2fb182;
+    }
 
-.contact-info-item h6 {
-    font-weight: 700;
-    margin-bottom: 2px;
-}
+    .contact-info-item h6 {
+        font-weight: 700;
+        margin-bottom: 2px;
+    }
 
-.contact-info-item p {
-    font-size: 14px;
-    color: #555;
-}
+    .contact-info-item p {
+        font-size: 14px;
+        color: #555;
+    }
 
-/* Form Box */
-.form-box-custom {
-    background-color: #c0cecd; /* આછો બ્લુ/ટીલ કલર */
-    border-radius: 15px;
+    /* Form Box */
+    .form-box-custom {
+        background-color: #c0cecd;
+        border-radius: 15px;
+    }
 
-}
+    .form-box-custom .form-control {
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        color: black;
+    }
 
-.form-box-custom .form-control {
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-        color:black;
-}
+    /* Button */
+    .btn-teal {
+        background-color: #3b9b8e;
+        color: white;
+        font-weight: 600;
+        border-radius: 8px;
+    }
 
-/* Button */
-.btn-teal {
-    background-color: #3b9b8e;
-    color: white;
-    font-weight: 600;
-    border-radius: 8px;
-}
+    .btn-teal:hover {
+        background-color: #2d7a6f;
+        color: white;
+    }
 
-.btn-teal:hover {
-    background-color: #2d7a6f;
-    color: white;
-}
-label
-{
-  color: #000;
-}
-/* Map Wrapper */
-.map-wrapper {
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}</style>
+    label {
+        color: #000;
+    }
+
+    /* Map Wrapper */
+    .map-wrapper {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 
 <body>
@@ -131,24 +133,35 @@ label
           <h3 class="text-center fw-bold">Contact Info</h3>
           <p class="text-center text-muted small mb-4">Nibh dis faucibus proin lacus tristique</p>
           
-          <form method="POST">
+          {% if success %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Your message has been sent successfully! We will get back to you soon.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endif %}
+
+          <form action="/contact" method="POST">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label small fw-bold text-dark">First Name</label>
-                <input type="text" class="form-control" placeholder="Your name">
+                <input type="text" name="first_name" class="form-control" placeholder="Your name" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label class="form-label small fw-bold text-dark">Last Name</label>
-                <input type="text" class="form-control" placeholder="Your last name">
+                <input type="text" name="last_name" class="form-control" placeholder="Your last name" required>
               </div>
             </div>
             <div class="mb-3">
-              <label class="form-label small fw-bold text-dark" >Email Address</label>
-              <input type="email" class="form-control" placeholder="Your E-mail address">
+              <label class="form-label small fw-bold text-dark">Email Address</label>
+              <input type="email" name="email" class="form-control" placeholder="Your E-mail address" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-dark">Subject</label>
+              <input type="text" name="subject" class="form-control" placeholder="Subject" required>
             </div>
             <div class="mb-4">
               <label class="form-label small fw-bold text-dark">Message</label>
-              <textarea class="form-control" rows="4" placeholder="Your message..."></textarea>
+              <textarea name="message" class="form-control" rows="4" placeholder="Your message..." required></textarea>
             </div>
             <button type="submit" class="btn btn-teal w-100 py-2">Send Message</button>
           </form>
@@ -159,12 +172,13 @@ label
     <div class="row mt-5">
       <div class="col-12">
         <div class="map-wrapper">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3686.5335403432177!2d70.05470117522223!3d22.4841567362062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39576aa9e78ecba5%3A0x417ba9101a4adf23!2sVidyasagar%20Infotech%20College!5e0!3m2!1sen!2sin!4v1773590513028!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3686.5335403432177!2d70.05470117522223!3d22.4841567362062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39576aa9e78ecba5%3A0x417ba9101a4adf23!2sVidyasagar%20Infotech%20College!5e0!3m2!1sen!2sin!4v1773590513028!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
     </div>
   </div>
 </section>
+
 {% include "footer.html" %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
